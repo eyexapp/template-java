@@ -1,0 +1,10 @@
+target/
+.git/
+.idea/
+*.iml
+*.md
+.env*
+.vscode/
+.github/
+.editorconfig
+.cursorrules

@@ -1,0 +1,46 @@
+{
+  "name": "java",
+  "displayName": "Spring Boot",
+  "description": "Spring Boot 3.4 backend with Java 21, JWT authentication, PostgreSQL, Flyway migrations, and OpenAPI",
+  "category": "backend",
+  "language": "java",
+  "framework": "spring-boot",
+  "stack": ["java-21", "spring-boot-3", "postgresql", "flyway", "jwt", "openapi", "mapstruct", "testcontainers"],
+  "features": ["rest-api", "authentication", "database", "migrations", "swagger", "testing", "docker"],
+  "commands": {
+    "dev": "./mvnw spring-boot:run",
+    "build": "./mvnw clean package",
+    "test": "./mvnw test",
+    "lint": "./mvnw checkstyle:check"
+  },
+  "packageManager": "maven",
+  "ci": {
+    "workflowTemplate": "java",
+    "runner": "ubuntu-latest",
+    "runtime": {
+      "name": "java",
+      "version": "21",
+      "setup": "actions/setup-java@v4",
+      "distribution": "temurin",
+      "cache": "maven"
+    },
+    "services": {
+      "postgres": {
+        "image": "postgres:16",
+        "env": {
+          "POSTGRES_USER": "test",
+          "POSTGRES_PASSWORD": "test",
+          "POSTGRES_DB": "test_db"
+        },
+        "ports": ["5432:5432"],
+        "options": "--health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5"
+      }
+    },
+    "steps": {
+      "install": null,
+      "build": "./mvnw clean package -DskipTests",
+      "test": "./mvnw test",
+      "lint": "./mvnw checkstyle:check"
+    }
+  }
+}
